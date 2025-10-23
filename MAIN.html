@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LPU Pirates Esports</title>
+    <link rel="icon" type="image/png" href="LOGO.png" />
+    <!-- Oswald Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* GENERAL STYLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Oswald", sans-serif;
+      }
+      body,
+      html {
+        height: 100%;
+        color: white;
+        background-color: black;
+      }
+
+      @font-face {
+        font-family: "CustomFont";
+        src: url("Deutschlander.otf") format("opentype");
+      }
+
+      /* Underline animation */
+      nav ul li a::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background: rgb(255, 255, 255);
+        transition: width 0.3s ease;
+        transform: translateX(-50%);
+      }
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+
+      /* Logo hover effect */
+      .logo a img {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        cursor: pointer;
+      }
+      .logo a img:hover {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+      section,
+      footer {
+        position: relative;
+        z-index: 3; /* ensures images, colors, and footer show above video/overlay */
+      }
+      .btn {
+        display: inline-block;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        border: 2px solid white;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      .btn:hover {
+        background-color: white;
+        color: black;
+      }
+
+      /* HEADER */
+      header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 15px 50px;
+        display: flex;
+        align-items: center;
+        transition: background 0.3s ease;
+        background: transparent;
+        z-index: 100;
+      }
+      header.scrolled {
+        background: rgba(0, 0, 0, 0.8);
+      }
+      header .logo {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: red;
+        margin-right: 40px;
+      }
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+      }
+      nav ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        position: relative;
+        padding-bottom: 5px;
+      }
+
+      /* HERO WITH VIDEO BACKGROUND */
+      .hero {
+        position: relative;
+        height: 100vh;
+        width: 100%;
+        z-index: 0; /* base layer */
+      }
+
+      .hero video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0; /* keep it at the base */
+        pointer-events: none;
+      }
+
+      .hero .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1; /* above video */
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2; /* above overlay */
+        text-align: center;
+        color: white;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* FLAT SPACIOUS SECTION 1 */
+      .flat-section-1 {
+        position: relative;
+        width: 100%;
+        height: 100vh; /* full viewport height */
+        overflow: hidden;
+      }
+
+      .flat-section-1 .bg-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* makes sure the image covers the section */
+        z-index: -1; /* keeps it behind the text */
+      }
+
+      .flat-section-1 .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(
+          0,
+          0,
+          0,
+          0.3
+        ); /* adjust the 0.5 to make it lighter/darker */
+        z-index: -1;
+      }
+
+      .flat-section-1 .content {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 2;
+        padding-bottom: 100px;
+      }
+
+      .flat-section-1 .content h2 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+
+      .flat-section-1 .content p {
+        font-size: 1.2rem;
+      }
+
+      /* FLAT SPACIOUS SECTION 2 */
+      .flat-section-2 {
+        position: relative;
+        width: 100%;
+        height: 100vh; /* full viewport height */
+        overflow: hidden;
+      }
+
+      .flat-section-2 .bg-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* makes sure the image covers the section */
+        z-index: -1; /* keeps it behind the text */
+      }
+
+      .flat-section-2 .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(
+          0,
+          0,
+          0,
+          0.3
+        ); /* adjust the 0.5 to make it lighter/darker */
+        z-index: -1;
+      }
+
+      .flat-section-2 .content {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 2;
+        padding-bottom: 100px;
+      }
+
+      .flat-section-2 .content h2 {
+        font-size: 3rem;
+        margin-bottom: 20px;
+      }
+
+      .flat-section-2 .content p {
+        font-size: 1.2rem;
+      }
+
+      .two-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        height: 100vh; /* makes it full screen */
+        overflow: hidden;
+      }
+
+      /* Shared for both grids */
+      .two-grid .grid-left,
+      .two-grid .grid-right {
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Images */
+      .two-grid .bg-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -2;
+      }
+
+      /* Overlay */
+      .two-grid .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3); /* darkens */
+        z-index: -1;
+      }
+
+      /* Text inside left grid */
+      .two-grid .grid-left .content {
+        position: absolute;
+        bottom: 50px;
+        left: 50px;
+        text-align: left;
+        color: white;
+        z-index: 2;
+      }
+
+      /* Text inside right grid */
+      .two-grid .grid-right .content {
+        position: absolute;
+        bottom: 50px;
+        right: 50px;
+        text-align: right;
+        color: white;
+        z-index: 2;
+      }
+
+      /* Overlapping text between grids */
+      .two-grid .overlap-text {
+        position: absolute;
+        top: 70%; /* vertically center */
+        left: 50%; /* horizontally center */
+        transform: translate(-50%, -50%); /* center perfectly */
+        color: white;
+        text-align: center;
+        z-index: 3; /* above overlays and images */
+        font-size: 2rem; /* adjust as needed */
+      }
+
+      .two-grid .overlap-text h1 {
+        margin-bottom: 20px; /* Space below the heading */
+      }
+
+      .two-grid .overlap-text .btn {
+        display: inline-block;
+        font-size: 1.2rem;
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        border: 2px solid white;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .two-grid .overlap-text .btn:hover {
+        background-color: white;
+        color: black;
+      }
+
+      .partners {
+        background: #ffffff; /* Background color */
+        padding: 150px; /* Padding around the section */
+        text-align: center; /* Center align text */
+      }
+
+      .partners h2 {
+        color: rgb(0, 0, 0); /* Color of the heading */
+        margin-bottom: 100px; /* Space below the heading */
+      }
+
+      /* Section styling */
+      .shop-section {
+        background: #000;
+        padding: 60px 40px;
+        color: white;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+      }
+
+      /* Grid layout */
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 30px;
+      }
+
+      /* Product card */
+      .product-card {
+        position: relative;
+        overflow: hidden;
+        background: #111;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .product-card img {
+        width: 100%;
+        display: block;
+        transition: transform 0.4s ease;
+      }
+
+      .product-card:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Overlay effect */
+      .product-card .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.65);
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity 0.4s ease;
+      }
+
+      .product-card:hover .overlay {
+        opacity: 1;
+      }
+
+      /* Button inside overlay */
+      .product-card .btn {
+        background: white;
+        color: black;
+        padding: 10px 18px;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 4px;
+        transition: background 0.3s ease;
+      }
+
+      .product-card .btn:hover {
+        background: #353233;
+        color: white;
+      }
+
+      /* Info (name + price) */
+      .product-card .info {
+        padding: 15px;
+      }
+
+      .product-card .info .name {
+        font-size: 1rem;
+        margin: 5px 0;
+      }
+
+      .product-card .info .price {
+        font-size: 0.9rem;
+        color: #aaa;
+      }
+
+      .logo-track {
+        display: flex;
+        justify-content: center;
+        gap: 100px; /* space between logos */
+        animation: scroll 30s linear infinite;
+        width: max-content; /* ensures it sizes naturally */
+      }
+
+      .logo-track img {
+        height: 150px; /* Default logo height */
+        transition: transform 0.3s; /* Transition for scaling */
+        object-fit: contain; /* Maintain aspect ratio */
+      }
+
+      .logo-track img.p2 {
+        padding-top: 0; /* Specific padding for p2 class */
+        height: 120px; /* Height for specific logos */
+      }
+
+      .logo-track img:hover {
+        transform: scale(1.3); /* Scale effect on hover */
+        filter: none; /* No filter on hover */
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-33.333%);
+        } /* One third because logos are repeated */
+      }
+
+      .site-footer {
+        background: #000;
+        color: #fff;
+        padding: 60px 40px;
+      }
+
+      .footer-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      /* Left */
+      .footer-left {
+        flex: 1;
+        min-width: 200px;
+      }
+
+      .footer-logo {
+        height: 100px;
+        margin-bottom: 15px;
+      }
+
+      .footer-left p {
+        font-size: 0.9rem;
+        color: #aaa;
+      }
+
+      /* Right */
+      .footer-right {
+        flex: 0.6;
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+        flex-wrap: wrap;
+      }
+
+      .footer-column h3 {
+        font-size: 1rem;
+        margin-bottom: 15px;
+        color: red;
+        text-transform: uppercase;
+      }
+
+      .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 10px;
+      }
+
+      .footer-column ul li a {
+        color: #ccc;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s;
+      }
+
+      footer a::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -20%;
+        width: 0;
+        height: 2px;
+        background: rgb(255, 255, 255);
+        transition: width 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      footer a:hover::after {
+        width: 100%;
+      }
+
+      footer a {
+        position: relative;
+        display: inline-block;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+    <header id="main-header">
+      <div class="logo">
+        <a href="MAIN.html">
+          <img src="logo.png" alt="Esports Logo" style="height: 80px" />
+        </a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="ESPORTS.html">Esports</a></li>
+          <li><a href="EVENTS.html">Events</a></li>
+          <li><a href="STORE.html">Store</a></li>
+          <li><a href="TEAM.html">Team</a></li>
+        </ul>
+      </nav>
+      <div
+        class="social-links"
+        style="margin-left: auto; display: flex; align-items: center"
+      >
+        <a href="https://www.instagram.com/"
+          ><img
+            src="SEARCH.png"
+            alt="Instagram"
+            style="height: 30px; margin-left: 15px"
+        /></a>
+        <a href="https://x.com/"
+          ><img
+            src="BASKET.png"
+            alt="Twitter"
+            style="height: 30px; margin-left: 15px"
+        /></a>
+        <a href="login.html"
+          ><img
+            src="ACC.png"
+            alt="Login/Sign Up"
+            style="height: 30px; margin-left: 15px"
+        /></a>
+      </div>
+    </header>
+
+    <!-- HERO WITH VIDEO BACKGROUND -->
+    <section class="hero">
+      <video autoplay muted loop playsinline id="background-video">
+        <source src="myvid2.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <div class="overlay"></div>
+    </section>
+
+    <!-- FLAT SPACIOUS SECTION -->
+    <section class="flat-section-1">
+      <img src="GAMING.jpg" alt="Background" class="bg-img" />
+      <div class="overlay"></div>
+      <div class="content">
+        <h2>PASSION FOR GAMING</h2>
+        <a href="#" class="btn">VIEW MORE</a>
+      </div>
+    </section>
+
+    <section class="two-grid">
+      <!-- Left Grid -->
+      <div class="grid-left">
+        <img src="SHOP.jpg" alt="Left Grid Image" class="bg-img" />
+        <div class="overlay"></div>
+      </div>
+
+      <div class="overlap-text">
+        <h1>MERCHANDISE</h1>
+        <a href="#" class="btn">SHOP NOW</a>
+      </div>
+
+      <!-- Right Grid -->
+      <div class="grid-right">
+        <img src="SHOP3.jpg" alt="Right Grid Image" class="bg-img" />
+        <div class="overlay"></div>
+      </div>
+    </section>
+
+    <!-- FLAT SPACIOUS SECTION -->
+    <section class="flat-section-2">
+      <img src="EVENT.jpg" alt="Background" class="bg-img" />
+      <div class="overlay"></div>
+      <div class="content">
+        <h2>EVENTS FOR THE COMMUNITY</h2>
+        <a href="#" class="btn">JOIN NOW</a>
+      </div>
+    </section>
+
+    <section class="shop-section">
+      <h2
+        style="
+          font-family: 'CustomFont', sans-serif;
+          font-size: 100px;
+          letter-spacing: 4px;
+          font-weight: 300;
+          padding-bottom: 30px;
+        "
+      >
+        FEATURED PRODUCTS
+      </h2>
+
+      <div class="product-grid">
+        <!-- Product 1 -->
+        <div class="product-card">
+          <img src="JERSEY.jpg" alt="Los Ratones Jersey" />
+          <div class="overlay">
+            <a href="#" class="btn">VIEW</a>
+          </div>
+          <div class="info">
+            <p class="name">Carabao</p>
+            <p class="price">Php 75.00</p>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img src="SHOP2.jpg" alt="Los Ratones Jersey" />
+          <div class="overlay">
+            <a href="#" class="btn">VIEW</a>
+          </div>
+          <div class="info">
+            <p class="name">Jersey V2</p>
+            <p class="price">Php 75.00</p>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img src="JERSEY.jpg" alt="Los Ratones Jersey" />
+          <div class="overlay">
+            <a href="#" class="btn">VIEW</a>
+          </div>
+          <div class="info">
+            <p class="name">Lanyard</p>
+            <p class="price">Php 75.00</p>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img src="SHOP2.jpg" alt="Los Ratones Jersey" />
+          <div class="overlay">
+            <a href="#" class="btn">VIEW</a>
+          </div>
+          <div class="info">
+            <p class="name">Jersey</p>
+            <p class="price">Php 75.00</p>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <img src="JERSEY.jpg" alt="Los Ratones Jersey" />
+          <div class="overlay">
+            <a href="#" class="btn">VIEW</a>
+          </div>
+          <div class="info">
+            <p class="name">Megabox</p>
+            <p class="price">Php 75.00</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PARTNERSHIP -->
+    <section class="partners">
+      <h2
+        style="
+          font-family: 'CustomFont', sans-serif;
+          font-size: 100px;
+          letter-spacing: 4px;
+          font-weight: 300;
+        "
+      >
+        IN PARTNERSHIP WITH
+      </h2>
+      <div class="logo-slider">
+        <div class="logo-track">
+          <img src="T1.png" alt="Logo 1" />
+          <img src="ACADARENA.png" alt="Logo 2" />
+          <img src="DLS.png" alt="Logo 3" />
+          <img src="LPU.png" alt="Logo 4" />
+          <img src="MPL.png" alt="Logo 5" />
+          <img src="RIOT.jpg" alt="Logo 6" />
+          <img src="LVL.png" alt="Logo 7" />
+          <img src="TGS.png" alt="Logo 8" />
+          <!-- Repeat logos for seamless looping -->
+          <img src="T1.png" alt="Logo 1" />
+          <img src="ACADARENA.png" alt="Logo 2" />
+          <img src="DLS.png" alt="Logo 3" />
+          <img src="LPU.png" alt="Logo 4" />
+          <img src="MPL.png" alt="Logo 5" />
+          <img src="RIOT.jpg" alt="Logo 6" />
+          <img src="LVL.png" alt="Logo 7" />
+          <img src="TGS.png" alt="Logo 8" />
+          <!-- Repeat logos for seamless looping -->
+          <img src="T1.png" alt="Logo 1" />
+          <img src="ACADARENA.png" alt="Logo 2" />
+          <img src="DLS.png" alt="Logo 3" />
+          <img src="LPU.png" alt="Logo 4" />
+          <img src="MPL.png" alt="Logo 5" />
+          <img src="RIOT.jpg" alt="Logo 6" />
+          <img src="LVL.png" alt="Logo 7" />
+          <img src="TGS.png" alt="Logo 8" />
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <!-- Left side -->
+        <div class="footer-left">
+          <img src="logo.png" alt="Logo" class="footer-logo" />
+          <p>© 2025 LPU Pirates Esports. All Rights Reserved.</p>
+        </div>
+
+        <!-- Right side -->
+        <div class="footer-right">
+          <div class="footer-column">
+            <h3
+              style="
+                font-family: 'CustomFont', sans-serif;
+                font-size: 50px;
+                letter-spacing: 4px;
+                font-weight: 300;
+              "
+            >
+              LPU PIRATES ESPORTS
+            </h3>
+            <ul>
+              <li><a href="#">News</a></li>
+              <li><a href="#">Events</a></li>
+              <li><a href="#">Community</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3
+              style="
+                font-family: 'CustomFont', sans-serif;
+                font-size: 50px;
+                letter-spacing: 4px;
+                font-weight: 300;
+              "
+            >
+              SHOP
+            </h3>
+            <ul>
+              <li><a href="#">All Products</a></li>
+              <li><a href="#">Brand Kit</a></li>
+              <li><a href="#">Jerseys</a></li>
+              <li><a href="#">Accessories</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h3
+              style="
+                font-family: 'CustomFont', sans-serif;
+                font-size: 50px;
+                letter-spacing: 4px;
+                font-weight: 300;
+              "
+            >
+              TEAMS
+            </h3>
+            <ul>
+              <li><a href="#">All Teams</a></li>
+              <li><a href="#">League of Legends</a></li>
+              <li><a href="#">Counter-Strike 2</a></li>
+              <li><a href="#">Mobile Legeds: Bang Bang</a></li>
+              <li><a href="#">Valorant</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Add background to header on scroll
+      const header = document.getElementById("main-header");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 50) {
+          header.classList.add("scrolled");
+        } else {
+          header.classList.remove("scrolled");
+        }
+      });
+
+      // Make logo clickable (scroll to top if already on homepage)
+      document.querySelector(".logo a").addEventListener("click", function (e) {
+        if (
+          window.location.pathname.endsWith("index.html") ||
+          window.location.pathname === "/"
+        ) {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+    </script>
+  </body>
+</html>
